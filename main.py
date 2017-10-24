@@ -33,7 +33,7 @@ if response.status_code == 200:
                 villageCode=CommonMath.get_village_code(item['village']), jobType=CommonMath.get_job_type(item['hangYe']),
                 agreeComing=CommonMath.get_agree_coming_home(item['coming_home']))
 
-        post_data = '{0}{1}{2}'.format(post_data_pre, urllib.parse.quote(post_data_mid),POST_DATA_LAST)
+        post_data = '{0}{1}{2}'.format(post_data_pre, urllib.quote(post_data_mid),POST_DATA_LAST)
         result = session.post(POST_DATA_URL,post_data)
         if result.status_code == 200:
             print('插入数据成功！')
