@@ -4,11 +4,11 @@ from config import *
 
 class OperateExcel(object):
     def __init__(self, filename=FILENAME):
-        self._sheet = xlrd.open_workbook(filename).sheet_by_index(2)
-
+        # 参数formatting_info=True，得以保存之前数据的格式
+        self._sheet = xlrd.open_workbook(filename, formatting_info=True).sheet_by_index(2)
 
     def get_cols_num(self):
-        return self._sheet.ncols()
+        return self._sheet.ncols
 
     def read_excel(self):
         for row_num in range(0, self._sheet.nrows):
