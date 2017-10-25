@@ -4,19 +4,15 @@ from config import *
 
 class OperateExcel(object):
     def __init__(self, filename=FILENAME):
-        self._filename = filename
+        self._sheet = xlrd.open_workbook(filename).sheet_by_index(2)
 
 
     def get_cols_num(self):
-        workbook = xlrd.open_workbook(self._filename)
-        sheet = workbook.sheet_by_index(2)
-        return sheet.ncols()
+        return self._sheet.ncols()
 
     def read_excel(self):
-        workbook = xlrd.open_workbook(self._filename)
-        sheet = workbook.sheet_by_index(2)
-        for row_num in range(0, sheet.nrows):
-            row = sheet.row_values(row_num)
+        for row_num in range(0, self._sheet.nrows):
+            row = self._sheet.row_values(row_num)
             # print(row)
             item = {
                 'village': row[1],
@@ -34,10 +30,8 @@ class OperateExcel(object):
             yield item
 
     def write_excel(self, row_num, col_num, data):
-        workbook = xlrd.open_workbook(self._filename)
-        sheet = workbook.sheet_by_index(2)
         try:
-            sheet.put_cell(row_num, col_num, 1, data)
+            self._sheet.put_cell(row_num, col_num, 1, data)
             return 1
         except:
             return None
